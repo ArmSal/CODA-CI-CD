@@ -18,6 +18,13 @@ jobs:
         run: echo "before_script"
       - name: Build app
         run: echo "Construction application"
+      - name: Create file
+        run: echo "contenu" > mon_fichier.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mon_fichier
+          path: mon_fichier.txt
       - name: After script
         if: always()
         run: echo "after_script"
@@ -39,8 +46,14 @@ jobs:
     steps:
       - name: Before script
         run: echo "before_script"
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mon_fichier
       - name: Test
         run: echo "Exécution de $APP_NAME dans $ENVIRONMENT est OK..."
+      - name: Read file
+        run: cat mon_fichier.txt
       - name: After script
         if: always()
         run: echo "after_script"
