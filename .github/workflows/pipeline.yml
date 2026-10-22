@@ -85,3 +85,22 @@ jobs:
       - name: After script
         if: always()
         run: echo "after_script"
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build_app, build_docs, test, deploy, deploy_staging]
+    if: always()
+    steps:
+      - name: Before script
+        run: echo "before_script"
+      - name: Notify
+        run: |
+          echo "Pipeline terminé"
+          echo "build_app: ${{ needs.build_app.result }}"
+          echo "build_docs: ${{ needs.build_docs.result }}"
+          echo "test: ${{ needs.test.result }}"
+          echo "deploy: ${{ needs.deploy.result }}"
+          echo "deploy_staging: ${{ needs.deploy_staging.result }}"
+      - name: After script
+        if: always()
+        run: echo "after_script"
