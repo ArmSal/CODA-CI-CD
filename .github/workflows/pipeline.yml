@@ -11,15 +11,21 @@ env:
   ENVIRONMENT: "development"
 
 jobs:
-  build:
+  build_app:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-        run: echo "Construction de $APP_NAME est OK..."
+      - name: Build app
+        run: echo "Construction application"
+
+  build_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build docs
+        run: echo "Construction documentation"
 
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build_app, build_docs]
     steps:
       - name: Test
         run: echo "Exécution de $APP_NAME dans $ENVIRONMENT est OK..."
